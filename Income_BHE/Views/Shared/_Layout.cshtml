@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Income_BHE</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    @* Uncomment to use the HtmlEditor control *@
+    @* <script src="https://unpkg.com/devextreme-quill@24_1/dist/dx-quill.min.js"></script> *@
+
+    @* Uncomment to use the Gantt control *@
+    @*<link href="~/css/devextreme/dx-gantt.css" rel="stylesheet" />*@
+
+    @* Uncomment to use the Diagram control *@
+    @*<link href="~/css/devextreme/dx-diagram.css" rel="stylesheet" />*@
+
+    @* Custom theme with a color swatch *@
+    @* Docs: https://js.devexpress.com/DevExtreme/Guide/Themes_and_Styles/Predefined_Themes/#Color_Swatches *@
+
+    @* Uncomment to use the Gantt control *@
+    @*<script src="~/js/devextreme/dx-gantt.js"></script>*@
+
+    @* Uncomment to use the Diagram control *@
+    @*<script src="~/js/devextreme/dx-diagram.js"></script>*@
+
+    <script src="~/js/devextreme/jquery.js"></script>
+
+    @* Localization: https://docs.devexpress.com/AspNetCore/400577 *@
+
+    @* Uncomment to enable client-side export *@
+    <script src="~/js/devextreme/jszip.js"></script>
+
+    <script src="~/js/devextreme/dx.all.js"></script>
+
+    @* Uncomment to provide geo-data for the VectorMap control *@
+    @* Docs: https://js.devexpress.com/DevExtreme/Guide/Widgets/VectorMap/Providing_Data/#Data_for_Areas *@
+    @*<script src="~/js/devextreme/vectormap-data/world.js"></script>*@
+
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+
+    <link href="~/css/devextreme/theme.base.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/typography.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/devextreme-custom.css" asp-append-version="true" />
+
+    <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/utility.css" asp-append-version="true"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+
+
+</head>
+
+
+<body>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+    <div x-data="{ showSidebar: window.innerWidth >= 768 }"
+         x-on:keydown.window.escape="showSidebar = false"
+         class="flex flex-col h-screen">
+
+        <div class="flex flex-1 overflow-hidden">
+
+            <nav x-cloak
+                 class="fixed top-0 left-0 z-20 h-full w-60 md:w-64 flex-shrink-0 flex-col border-r border-neutral-accent-100 bg-neutral-accent-200 p-4 transform transition-transform duration-500"
+                 x-bind:class="showSidebar ? 'translate-x-0' : '-translate-x-full'"
+                 aria-label="sidebar navigation">
+
+                <!-- Dropdown: User Management -->
+                <div x-data="{ isExpanded: false }" class="flex flex-col">
+                    <button type="button" x-on:click="isExpanded = !isExpanded"
+                            class="flex items-center justify-between rounded-radius px-2 py-1.5 text-sm font-medium text-on-surface"
+                            x-bind:class="isExpanded ? 'text-on-surface-strong bg-primary/10' : 'hover:bg-primary/5 hover:text-on-surface-strong'">
+                        <span class="mr-auto text-left">User Management</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                             viewBox="0 0 20 20" class="size-5 transition-transform"
+                             x-bind:class="isExpanded ? 'rotate-180' : 'rotate-0'">
+                            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <ul x-cloak x-show="isExpanded" x-collapse>
+                        <li class="px-1 py-0.5 first:mt-2"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Users</a></li>
+                        <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Permissions</a></li>
+                        <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Activity Log</a></li>
+                    </ul>
+                </div>
+
+                <!-- Dropdown: Products -->
+                <div x-data="{ isExpanded: false }" class="flex flex-col mt-2">
+                    <button type="button" x-on:click="isExpanded = !isExpanded"
+                            class="flex items-center justify-between rounded-radius px-2 py-1.5 text-sm font-medium text-on-surface"
+                            x-bind:class="isExpanded ? 'text-on-surface-strong bg-primary/10' : 'hover:bg-primary/5 hover:text-on-surface-strong'">
+                        <span class="mr-auto text-left">Products</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                             viewBox="0 0 20 20" class="size-5 transition-transform"
+                             x-bind:class="isExpanded ? 'rotate-180' : 'rotate-0'">
+                            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <ul x-cloak x-show="isExpanded" x-collapse>
+                        <li class="px-1 py-0.5 first:mt-2"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">All Products</a></li>
+                        <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Inventory</a></li>
+                        <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Reviews</a></li>
+                    </ul>
+                </div>
+
+                <!-- Dropdown: Orders -->
+                <div x-data="{ isExpanded: false }" class="flex flex-col mt-2">
+                    <button type="button" x-on:click="isExpanded = !isExpanded"
+                            class="flex items-center justify-between rounded-radius px-2 py-1.5 text-sm font-medium text-on-surface"
+                            x-bind:class="isExpanded ? 'text-on-surface-strong bg-primary/10' : 'hover:bg-primary/5 hover:text-on-surface-strong'">
+                        <span class="mr-auto text-left">Orders</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                             viewBox="0 0 20 20" class="size-5 transition-transform"
+                             x-bind:class="isExpanded ? 'rotate-180' : 'rotate-0'">
+                            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <ul x-cloak x-show="isExpanded" x-collapse>
+                        <li class="px-1 py-0.5 first:mt-2"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Pending</a></li>
+                        <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Shipped</a></li>
+                        <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Completed</a></li>
+                        <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Returns</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div x-cloak x-show="showSidebar" x-transition.opacity
+                 class="fixed inset-0 z-10 bg-black/40 md:hidden"
+                 @@click ="showSidebar = false"></div>
+            <main class="flex-1 overflow-y-auto transition-all duration-300"
+                  x-bind:class="showSidebar ? 'md:ml-64' : 'md:ml-0'">
+
+                <section class="flex items-center justify-between px-6 py-2 border-b border-neutral-accent-100 bg-white" aria-label="main navigation">
+
+                    <button x-on:click="showSidebar = !showSidebar"
+                            class="flex text-on-surface mr-4"
+                            aria-label="Toggle sidebar">
+                        <i class="ri-side-bar-line text-xl hidden md:inline"></i>
+                        <i class="ri-menu-line text-xl md:hidden"></i>
+                    </button>
+
+                    <div>
+                        @(Html.DevExtreme().Autocomplete()
+                                                .Buttons(b =>
+                                                {
+                                                    b.Add()
+                                                    .Name("search-menu")
+                                                    .Location(TextEditorButtonLocation.After)
+                                                    .Widget(w => w.Button()
+                                                    .Icon("search")
+                                                    .StylingMode(ButtonStylingMode.Text)
+                                                    );
+                                                })
+                                                .Width(260)
+                                                .Placeholder("What are you looking for?")
+                                                )
+                    </div>
+
+                    <div  x-data="{ userDropDownIsOpen: false, openWithKeyboard: false }">
+                        <button x-on:click="userDropDownIsOpen = ! userDropDownIsOpen"
+                                class="rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                                aria-controls="userMenu" aria-expanded="false">
+                            <i class="ri-user-line w-5 h-5 bg-neutral-accent-100 p-2 rounded-full rounded-full object-cover"></i>
+                        </button>
+                        <ul x-cloak x-show="userDropDownIsOpen || openWithKeyboard" x-transition.opacity
+                            class="absolute right-6 top-16 flex w-fit min-w-48 flex-col overflow-hidden rounded-radius border border-outline bg-surface-alt py-1.5">
+                            <li class="border-b border-outline">
+                                <div class="flex flex-col px-4 py-2">
+                                    <span class="text-sm font-medium text-on-surface-strong">Alice Brown</span>
+                                    <p class="text-xs text-on-surface">alice.brown@gmail.com</p>
+                                </div>
+                            </li>
+                            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-primary/5 hover:text-on-surface-strong">Dashboard</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-primary/5 hover:text-on-surface-strong">Subscription</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-primary/5 hover:text-on-surface-strong">Settings</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-primary/5 hover:text-on-surface-strong">Sign Out</a></li>
+                        </ul>
+                    </div>
+                </section>
+
+                <div class="px-6 py-4">
+
+                    @RenderBody()
+                </div>
+      
+            </main>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/scripts/utility.js"></script>
+    <script src="~/js/scripts/fetcher.js"></script>
+    <script src="~/js/scripts/devextreme-utility.js"></script>
+    <script src="~/js/scripts/constant.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "_EmptyLayout";
+}
+
+
+<main class="grid min-h-screen place-items-center px-6 py-24 sm:py-32 lg:px-8">
+    <div class="text-center">
+        <Typography variant="h6" font="semibold" color="primary">401</Typography>
+        <Typography variant="h1" font="bold" color="dark">Unauthorized</Typography>
+        <Typography variant="p" font="medium">Your session has expired or you do not have permission to view this page</Typography>
+        <div class="mt-8 flex items-center justify-center gap-x-5">
+            <button onclick="goBackLogin()" class="primary-btn">Login again</button>
+            <button class="neutral-btn">Contact support &rarr;</button>
+        </div>
+    </div>
+</main>
+
+@section scripts{
+    <script>
+              const goBackLogin = () =>{
+                  window.location.href= `${BASE_URL}`
+        }
+    </script>
+  
+}
