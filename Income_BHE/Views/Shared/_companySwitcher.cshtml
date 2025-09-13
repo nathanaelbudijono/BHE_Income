@@ -1,0 +1,147 @@
+﻿<div class="relative">
+    <button id="companySwitcherTrigger" class="w-full flex items-center justify-between gap-3 p-2 rounded-lg hover:bg-neutral-accent-100 transition-colors">
+        <div class="text-left">
+            <Typography color="dark" id="activeCompanyName" font="semibold"></Typography>
+            <Typography font="light" variant="sm" id="activeCompanyPlan" ></Typography>
+        </div>
+
+        <i id="chevronIcon" class="ri-expand-up-down-line w-4 h-4 text-slate-500"></i>
+    </button>
+
+    <div id="dropdownMenu"
+         class="absolute top-full left-0 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-56 hidden">
+
+        <div class="px-3 py-2 text-xs text-muted-foreground font-medium border-b border-gray-100">
+            <Typography variant="sm" color="dark">Available Company</Typography>
+        </div>
+
+        <div id="companiesList" class="py-1"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const CompanySwitcherManager = {
+        state: {
+            availableCompany: [],
+            currentCompany: null,
+            firstLoad: true
+        },
+
+        async getCompany() {
+            try {
+                const response = await getFetcher(`${API_URL}/authentication/user-company`)
+
+                if (response.status === "success") {
+                    this.state.availableCompany = response.data.availableCompany || [];
+                    this.state.currentCompany = response.data.selectedCompany || this.state.availableCompany[0];
+                }
+            } catch (err) {
+                console.error("Error fetching companies: ", err);
+            }
+        },
+
+       async selectCompany(companyId) {
+            const company = this.state.availableCompany.find(c => c.companyId === companyId);
+            if (company) this.state.currentCompany = company;
+            await  this.updateActiveCompany();
+        },
+
+       async updateActiveCompany() {
+            const company = this.state.currentCompany;
+            if (!company) return;
+            document.getElementById('activeCompanyName').textContent = company.companyId;
+            document.getElementById('activeCompanyPlan').textContent = company.companyName;
+
+            const response = await getFetcher(`${API_URL}/authentication/refresh-claims/${company.companyId}`);
+
+            if(response.status === "error"){
+                handleException(res.message, res.status);
+                return;
+           }
+
+           localStorage.setItem("stamp-token", response.data.token);
+           document.cookie = `stamp-token=${response.data.token}; path=/; Secure; SameSite=Lax`;
+
+            if (!this.state.firstLoad) {
+                toaster(response.message, response.status);
+            } else {
+                this.state.firstLoad = false;
+            }
+
+        },
+
+        renderCompany() {
+            renderMustache( { companies: this.state.availableCompany },"companiesList","company-template")
+        },
+        setupEventListeners() {
+            const trigger = document.getElementById('companySwitcherTrigger');
+            const dropdown = document.getElementById('dropdownMenu');
+            const chevron = document.getElementById('chevronIcon');
+            const companiesList = document.getElementById('companiesList');
+
+            trigger.addEventListener('click', () => {
+                const isOpen = !dropdown.classList.contains('hidden');
+                if (isOpen) {
+                    dropdown.classList.add('hidden');
+                    chevron.style.transform = 'rotate(0deg)';
+                    trigger.classList.remove('bg-sidebar-accent', 'text-sidebar-accent-foreground');
+                } else {
+                    dropdown.classList.remove('hidden');
+                    chevron.style.transform = 'rotate(180deg)';
+                    trigger.classList.add('bg-sidebar-accent', 'text-sidebar-accent-foreground');
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                    chevron.style.transform = 'rotate(0deg)';
+                    trigger.classList.remove('bg-sidebar-accent', 'text-sidebar-accent-foreground');
+                }
+            });
+
+            companiesList.addEventListener('click',async (e) => {
+                const companyOption = e.target.closest('.company-option');
+                if (companyOption) {
+                    const companyId = companyOption.dataset.companyId;
+                    await this.selectCompany(companyId);
+                    dropdown.classList.add('hidden');
+                    chevron.style.transform = 'rotate(0deg)';
+                    trigger.classList.remove('bg-sidebar-accent', 'text-sidebar-accent-foreground');
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.metaKey || e.ctrlKey) {
+                    const num = parseInt(e.key);
+                    if (num >= 1 && num <= this.state.availableCompany.length) {
+                        e.preventDefault();
+                        const companyId = this.state.availableCompany[num - 1].companyId;
+                        this.selectCompany(companyId);
+                    }
+                }
+                if (e.key === 'Escape') {
+                    dropdown.classList.add('hidden');
+                    chevron.style.transform = 'rotate(0deg)';
+                    trigger.classList.remove('bg-sidebar-accent', 'text-sidebar-accent-foreground');
+                }
+            });
+        },
+
+        async init() {
+            await this.getCompany();
+            this.updateActiveCompany();
+            this.renderCompany();
+            this.setupEventListeners();
+        }
+    };
+    document.addEventListener('DOMContentLoaded', () => CompanySwitcherManager.init());
+</script>
+<script id="company-template" type="x-tmpl-mustache">
+    {{#companies}}
+    <button class="w-full flex flex-col gap-1 text-left px-3 py-2 text-sm hover:bg-neutral-accent-200 transition-colors company-option" data-company-id="{{companyId}}">
+        <span class="leading-relaxed text-sm max-w-3xl text-slate-800 poppins-semibold">{{companyId}}</span>
+        <span class="leading-relaxed text-xs max-w-2xl poppins-light text-gray-400">{{companyName}}</span>
+    </button>
+    {{/companies}}
+</script>

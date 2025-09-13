@@ -53,3 +53,51 @@ const handleException = (message, type) => {
         });
     }
 };
+
+const generateBreadcrumbs = (items) => {
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+        return;
+    }
+    const container = document.getElementById("breadcrumb");
+    container.innerHTML = "";
+
+    items.forEach((item, index) => {
+        const isLast = index === items.length - 1;
+        let el;
+
+        if (item.link && !isLast) {
+            el = document.createElement("a");
+            el.href = item.link;
+            el.className =
+                "poppins-light text-slate-500 text-xs hover:underline";
+            el.textContent = item.text;
+        } else {
+            el = document.createElement("span");
+            el.className = isLast
+                ? "poppins-regular text-slate-800 text-xs"
+                : "poppins-light text-slate-500 text-xs";
+            el.textContent = item.text;
+        }
+
+        container.appendChild(el);
+
+        if (!isLast) {
+            const icon = document.createElement("i");
+            icon.className = "ri-arrow-right-s-line text-slate-500";
+            container.appendChild(icon);
+        }
+    });
+};
+
+const renderMustache = (data, containerId, templateId) => {
+    try {
+        const dataContainer = document.getElementById(containerId);
+        const template = document.getElementById(templateId);
+
+        const rendered = Mustache.render(template.innerHTML, data);
+        dataContainer.innerHTML = rendered;
+    } catch (err) {
+        console.error("Exception on renderMustahce : ", err);
+    }
+};
