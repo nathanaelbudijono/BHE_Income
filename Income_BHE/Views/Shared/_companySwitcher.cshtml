@@ -1,11 +1,11 @@
-﻿<div class="relative">
-    <button id="companySwitcherTrigger" class="w-full flex items-center justify-between gap-3 p-2 rounded-lg hover:bg-neutral-accent-100 transition-colors">
-        <div class="text-left">
-            <Typography color="dark" id="activeCompanyName" font="semibold"></Typography>
-            <Typography font="light" variant="sm" id="activeCompanyPlan" ></Typography>
+﻿<div class="relative" id="companySwitcher">
+    <button id="companySwitcherTrigger" class="w-full flex items-center justify-between gap-3 p-2 rounded-lg hover:bg-neutral-accent-100 transition-colors duration-200 focus:outline-none focus:ring-1 focus:ring-primary-100">
+        <div class="text-left flex flex-col">
+            <Typography color="dark" id="activeCompanyName" variant ="sm"font="medium" class="truncate"></Typography>
+            <Typography font="light" variant="sm" id="activeCompanyPlan" class="truncate"></Typography>
         </div>
 
-        <i id="chevronIcon" class="ri-expand-up-down-line w-4 h-4 text-slate-500"></i>
+        <i id="chevronIcon" class="ri-expand-up-down-line w-5 h-5 text-slate-500"></i>
     </button>
 
     <div id="dropdownMenu"
@@ -15,7 +15,7 @@
             <Typography variant="sm" color="dark">Available Company</Typography>
         </div>
 
-        <div id="companiesList" class="py-1"></div>
+        <div id="companiesList" class="py-1 max-h-[300px] overflow-y-auto"></div>
     </div>
 </div>
 
@@ -140,7 +140,7 @@
 <script id="company-template" type="x-tmpl-mustache">
     {{#companies}}
     <button class="w-full flex flex-col gap-1 text-left px-3 py-2 text-sm hover:bg-neutral-accent-200 transition-colors company-option" data-company-id="{{companyId}}">
-        <span class="leading-relaxed text-sm max-w-3xl text-slate-800 poppins-semibold">{{companyId}}</span>
+        <span class="leading-relaxed text-xs max-w-3xl text-slate-800 poppins-medium">{{companyId}}</span>
         <span class="leading-relaxed text-xs max-w-2xl poppins-light text-gray-400">{{companyName}}</span>
     </button>
     {{/companies}}

@@ -1,0 +1,67 @@
+﻿<section id="menu-container" class="mt-5 space-y-2"></section>
+<script>
+    const MenuManager = {
+        state  : {
+            availableMenu : []
+        },
+        async getMenu(){
+           const response = await getFetcher(`${API_URL}/user/my-menu`);
+            if (response.status === "success") {
+                 this.state.availableMenu = response.data;
+             }
+        },
+       buildMenu(items, level = 0) {
+          if (!items || !items.length) return "";
+          let html = "";
+          let indent = level;
+          if(level === 1) {
+              indent = level * 0.8;
+          } else {
+              indent = level * 0.3;
+          }
+
+          for (const item of items) {
+            const hasChild = item.menuChild && item.menuChild.length > 0;
+            const iconHtml = item.menuIcon ? `<i class="${item.menuIcon} mr-2"></i>` : "";
+            const link = item.menuLink || "#";
+
+            const parentClass = level === 0
+              ? "leading-relaxed text-sm max-w-3xl text-slate-800 poppins-regular"
+              : "leading-relaxed text-sm max-w-3xl text-slate-500 poppins-regular";
+
+            if (hasChild) {
+              html += `
+                <div x-data="{ open: false }" class="flex flex-col" style="margin-left:${indent}rem;">
+                  <div @@click="open = !open" class="flex items-center justify-between cursor-pointer ${parentClass} hover:bg-neutral-accent-100 transition-colors duration-200">
+                    <div class="flex items-center p-2">${iconHtml}${item.menuName}</div>
+                    <i class="ri-arrow-down-s-line"></i>
+                  </div>
+                  <div x-show="open" x-collapse class="ml-2">
+                    ${this.buildMenu(item.menuChild, level + 1)}
+                  </div>
+                </div>
+              `;
+            } else {
+              html += `
+                <a href="${link}" class="flex items-center cursor-pointer ${parentClass} hover:bg-neutral-accent-100 transition-colors duration-200" style="padding:0.5rem 0.5rem 0.5rem ${indent}rem;margin-left:0.5rem;">
+                  ${iconHtml}${item.menuName}
+                </a>
+              `;
+            }
+          }
+          return html;
+        },
+         async render(){
+            const container = document.getElementById("menu-container");
+            container.innerHTML = this.buildMenu(this.state.availableMenu);
+        },
+        async init(){
+            showLoader();
+            await this.getMenu();
+            this.render();
+            hideLoader();
+        }
+    }
+
+        document.addEventListener('DOMContentLoaded', () => MenuManager.init());
+</script>

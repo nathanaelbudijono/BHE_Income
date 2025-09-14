@@ -10,14 +10,7 @@ namespace Income_BHE.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IHttpClientFactory _clientFactory;
-
-        public HomeController(IHttpClientFactory clientFactory)
-        {
-            _clientFactory = clientFactory;
-        }
-
-        [TypeFilter(typeof(AuthorizePage))]
+        //[TypeFilter(typeof(AuthorizePage))]
         public IActionResult Index()
         {
             return View();

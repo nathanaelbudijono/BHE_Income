@@ -133,7 +133,7 @@
         handleException(res.message, res.status);
         return;
        }
-
+       setUserInfoToLocaleStorage(res.data.userInfo);
        localStorage.setItem("stamp-token", res.data.token);
        document.cookie = `stamp-token=${res.data.token}; path=/; Secure; SameSite=Lax`;
        window.location.href = `${BASE_URL}/home/index`;

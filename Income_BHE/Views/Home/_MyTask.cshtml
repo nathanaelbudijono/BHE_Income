@@ -1,0 +1,30 @@
+﻿<div class="bg-white rounded-lg shadow-sm border border-gray-200" id="myTask">
+    <div class="px-6 border-b border-gray-200">
+        <Typography variant="h6" font="semibold" color="dark">My Tasks</Typography>
+    </div>
+    <div class="p-6 space-y-3 max-h-[300px] overflow-y-auto" id="my-task-list">
+
+    </div>
+</div>
+
+<script id="my-task-template" type="x-tmpl-mustache">
+    {{#tasks}}
+    <a href="{{url}}" class="block">
+    <div class="flex items-center justify-between p-3 {{bgClass}} border {{borderClass}} rounded-lg hover:shadow-sm transition">
+        <div class="flex items-center">
+            <div class="ml-3 flex flex-col gap-1">
+                <p class="text-sm poppins-medium text-slate-800">{{title}}</p>
+                <p class="text-xs text-slate-500 poppins-light">Due: {{dueDescription}}</p>
+            </div>
+        </div>
+        <span class="{{badgeClass}} text-foreground text-xs px-2 py-1 poppins-light rounded-full">{{level}}</span>
+    </div>
+    </a>
+    {{/tasks}}
+</script>
+
+<script id="my-task-template-empty" type="x-tmpl-mustache">
+    <div class="p-4 text-center">
+        <p class="text-slate-500 text-sm poppins-light">No tasks assigned — you’re all caught up!</p>
+    </div>
+</script>

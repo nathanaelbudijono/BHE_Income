@@ -14,15 +14,15 @@ namespace Income_BHE.UiTagHelper
 
         private static readonly Dictionary<string, string> VariantClasses = new()
     {
-        { "sm",  "leading-relaxed text-xs max-w-2xl" },
-        { "p",  "leading-relaxed text-sm max-w-3xl" },
+        { "sm",  "leading-relaxed text-xs" },
+        { "p",  "leading-relaxed text-sm" },
 
-        { "h1", "leading-snug tracking-tight  mx-auto my-6 w-full text-2xl lg:max-w-3xl lg:text-5xl" },
-        { "h2", "leading-snug tracking-normal  mx-auto my-6 w-full text-2xl lg:max-w-3xl lg:text-4xl" },
-        { "h3", "leading-snug tracking-normal  mx-auto my-6 w-full text-xl max-w-lg lg:max-w-2xl lg:text-3xl" },
-        { "h4", "leading-snug tracking-normal  mx-auto my-6 w-full text-lg max-w-md lg:max-w-xl lg:text-2xl" },
-        { "h5", "leading-snug tracking-normal  mx-auto my-6 w-full text-base max-w-sm lg:max-w-lg lg:text-xl" },
-        { "h6", "leading-snug tracking-normal  mx-auto my-6 w-full text-sm max-w-xs lg:max-w-md lg:text-lg" }
+        { "h1", "leading-snug tracking-tight my-4 w-full text-2xl lg:text-5xl" },
+        { "h2", "leading-snug tracking-normal my-4 w-full text-2xl lg:text-4xl" },
+        { "h3", "leading-snug tracking-normal my-4 w-full text-xl lg:text-3xl" },
+        { "h4", "leading-snug tracking-normal my-4 w-full text-lg lg:text-2xl" },
+        { "h5", "leading-snug tracking-normal my-4 w-full text-base lg:text-xl" },
+        { "h6", "leading-snug tracking-normal my-4 w-full text-smd lg:text-lg" }
     };
 
         private static readonly Dictionary<string, string> ColorClasses = new()

@@ -49,10 +49,11 @@
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 
     <script src="https://unpkg.com/alpinejs" defer></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@8.3.1/dist/css/shepherd.css" />
 
     <link rel="stylesheet" href="~/css/typography.css" asp-append-version="true" />
 
@@ -81,69 +82,17 @@
         <div class="flex flex-1 overflow-hidden">
 
             <nav x-cloak
-                 class="fixed top-0 left-0 z-20 h-full w-60 md:w-64 flex-shrink-0 flex-col border-r border-neutral-accent-100 bg-neutral-accent-200 px-4 pb-4 pt-2 transform transition-transform duration-500"
+                 class="fixed top-0 left-0 z-20 h-full w-60 md:w-64 flex-shrink-0 flex-col border-r border-neutral-accent-100 bg-neutral-accent-200 px-4 pb-4 pt-2 transform transition-transform duration-500 flex justify-between"
                  x-bind:class="showSidebar ? 'translate-x-0' : '-translate-x-full'"
                  aria-label="sidebar navigation">
-                <partial name="~/Views/Shared/_companySwitcher.cshtml" />
-                <section class="mt-5">
-                    <div x-data="{ isExpanded: false }" class="flex flex-col">
-                        <button type="button" x-on:click="isExpanded = !isExpanded"
-                                class="flex items-center justify-between rounded-radius px-2 py-1.5 text-sm font-medium text-on-surface"
-                                x-bind:class="isExpanded ? 'text-on-surface-strong bg-primary/10' : 'hover:bg-primary/5 hover:text-on-surface-strong'">
-                            <span class="mr-auto text-left">User Management</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                 viewBox="0 0 20 20" class="size-5 transition-transform"
-                                 x-bind:class="isExpanded ? 'rotate-180' : 'rotate-0'">
-                                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <ul x-cloak x-show="isExpanded" x-collapse>
-                            <li class="px-1 py-0.5 first:mt-2"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Users</a></li>
-                            <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Permissions</a></li>
-                            <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Activity Log</a></li>
-                        </ul>
-                    </div>
+                <div>
+                    <partial name="_CompanySwitcher" />
+                    <partial name="_Menu" />
+                </div>
+                <div>
+                    <partial name="_AccountMenu" />
+                </div>
 
-                    <!-- Dropdown: Products -->
-                    <div x-data="{ isExpanded: false }" class="flex flex-col mt-2">
-                        <button type="button" x-on:click="isExpanded = !isExpanded"
-                                class="flex items-center justify-between rounded-radius px-2 py-1.5 text-sm font-medium text-on-surface"
-                                x-bind:class="isExpanded ? 'text-on-surface-strong bg-primary/10' : 'hover:bg-primary/5 hover:text-on-surface-strong'">
-                            <span class="mr-auto text-left">Products</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                 viewBox="0 0 20 20" class="size-5 transition-transform"
-                                 x-bind:class="isExpanded ? 'rotate-180' : 'rotate-0'">
-                                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <ul x-cloak x-show="isExpanded" x-collapse>
-                            <li class="px-1 py-0.5 first:mt-2"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">All Products</a></li>
-                            <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Inventory</a></li>
-                            <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Reviews</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Dropdown: Orders -->
-                    <div x-data="{ isExpanded: false }" class="flex flex-col mt-2">
-                        <button type="button" x-on:click="isExpanded = !isExpanded"
-                                class="flex items-center justify-between rounded-radius px-2 py-1.5 text-sm font-medium text-on-surface"
-                                x-bind:class="isExpanded ? 'text-on-surface-strong bg-primary/10' : 'hover:bg-primary/5 hover:text-on-surface-strong'">
-                            <span class="mr-auto text-left">Orders</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                 viewBox="0 0 20 20" class="size-5 transition-transform"
-                                 x-bind:class="isExpanded ? 'rotate-180' : 'rotate-0'">
-                                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <ul x-cloak x-show="isExpanded" x-collapse>
-                            <li class="px-1 py-0.5 first:mt-2"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Pending</a></li>
-                            <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Shipped</a></li>
-                            <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Completed</a></li>
-                            <li class="px-1 py-0.5"><a href="#" class="block rounded-radius px-2 py-1.5 text-sm hover:bg-primary/5">Returns</a></li>
-                        </ul>
-                    </div>
-                </section>
-              
             </nav>
 
             <div x-cloak x-show="showSidebar" x-transition.opacity
@@ -182,27 +131,17 @@
                                                 .Placeholder("What are you looking for?")
                                                 )
                     </div>
-
-                    <div x-data="{ userDropDownIsOpen: false, openWithKeyboard: false }">
-                        <button x-on:click="userDropDownIsOpen = ! userDropDownIsOpen"
-                                class="rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                                aria-controls="userMenu" aria-expanded="false">
-                            <i class="ri-user-line w-5 h-5 bg-neutral-accent-100 p-2 rounded-full rounded-full object-cover"></i>
+                    <div class="space-x-3">
+                        <button>
+                            <i class="ri-notification-2-line text-xl cursor-pointer hover:text-secondary-100 transition-colors duration-200"></i>
                         </button>
-                        <ul x-cloak x-show="userDropDownIsOpen || openWithKeyboard" x-transition.opacity
-                            class="absolute right-6 top-16 flex w-fit min-w-48 flex-col overflow-hidden rounded-radius border border-outline bg-surface-alt py-1.5">
-                            <li class="border-b border-outline">
-                                <div class="flex flex-col px-4 py-2">
-                                    <span class="text-sm font-medium text-on-surface-strong">Alice Brown</span>
-                                    <p class="text-xs text-on-surface">alice.brown@gmail.com</p>
-                                </div>
-                            </li>
-                            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-primary/5 hover:text-on-surface-strong">Dashboard</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-primary/5 hover:text-on-surface-strong">Subscription</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-primary/5 hover:text-on-surface-strong">Settings</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-sm hover:bg-primary/5 hover:text-on-surface-strong">Sign Out</a></li>
-                        </ul>
+                        <button id="start-tour-btn">
+                            <i id="start-tour-icon"  class="ri-question-line text-xl cursor-pointer hover:text-primary-100 transition-colors duration-200"></i>
+                        </button>
+          
                     </div>
+       
+
                 </section>
 
                 <div class="px-6 py-4">
@@ -212,25 +151,19 @@
             </main>
         </div>
     </div>
-
+    <div id="loadPanel"></div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@8.3.1/dist/js/shepherd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.1/mustache.min.js" integrity="sha512-3GRj7sme01zpWwRNPNy48Rda1bD9cq34lqYG5vb8ZXGc+wRqsoBJ3+AC25IYW5w5SrWlzHqIpNIxZt5QF9sXLg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/js/scripts/constant.js"></script>
     <script src="~/js/scripts/breadcrumbs.js"></script>
     <script src="~/js/scripts/utility.js"></script>
     <script src="~/js/scripts/fetcher.js"></script>
     <script src="~/js/scripts/devextreme-utility.js"></script>
+    <script src="~/js/scripts/helper.js"></script>
     @RenderSection("scripts", required: false)
-
-
-    <script>
-                   document.addEventListener("DOMContentLoaded", function () {
-                        generateBreadcrumbs(HOME_BREADCRUMBS);
-        })
-    </script>
-
 </body>
 </html>

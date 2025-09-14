@@ -11,25 +11,53 @@ const togglePasswordVisibility = (e) => {
     }
 };
 
-const toaster = (message, type) => {
-    toastr.options = {
-        closeButton: true,
-        debug: false,
-        newestOnTop: true,
-        progressBar: true,
-        positionClass: "toast-top-right",
-        preventDuplicates: true,
-        onclick: null,
-        showDuration: "1000",
-        hideDuration: "1000",
-        timeOut: "10000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        hideEasing: "linear",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut",
+const toaster = (message, type = "success", duration = 5000) => {
+    let container = document.getElementById("toastr-container");
+    if (!container) {
+        container = document.createElement("div");
+        container.id = "toastr-container";
+        container.className = "fixed top-5 right-5 flex flex-col gap-3 z-50";
+        document.body.appendChild(container);
+    }
+    const typeClasses = {
+        success: "bg-white border-neutral-accent-100",
+        error: "bg-red-500 text-white border-red-600",
+        info: "bg-blue-500 text-white border-blue-600",
+        warning: "bg-yellow-400 text-black border-yellow-500",
     };
-    toastr[type](message);
+
+    const toast = document.createElement("div");
+    toast.className = `
+        flex items-center gap-5 px-4 py-2 rounded-lg border shadow-sm transform transition
+        ${typeClasses["success"] || typeClasses.info}
+        opacity-0
+    `;
+    toast.innerHTML = `
+    <div class='flex items-center gap-2'>
+        <i class="ri-check-line text-md text-success-100"></i>
+        <p class="text-sm text-slate-800 poppins-regular">${message}</p>
+    </div>
+      <button class="ml-2">
+      <i class="ri-close-line text-md hover:text-destrutive-100 transition transition-colors duration-200 cursor-pointer"></i>
+      </button>
+    `;
+
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.classList.add("opacity-100");
+    });
+
+    const autoRemove = setTimeout(() => {
+        toast.classList.remove("opacity-100");
+        toast.addEventListener("transitionend", () => toast.remove());
+    }, duration);
+
+    toast.querySelector("button").addEventListener("click", () => {
+        clearTimeout(autoRemove);
+        toast.classList.remove("opacity-100");
+        toast.addEventListener("transitionend", () => toast.remove());
+    });
 };
 
 const handleException = (message, type) => {
@@ -37,6 +65,24 @@ const handleException = (message, type) => {
         Swal.fire({
             icon: "error",
             title: "Something went wrong!",
+            html: `<p class="leading-relaxed text-slate-500 text-sm max-w-3xl poppins-regular">${message}</p>`,
+            customClass: {
+                title: "leading-relaxed text-slate-500 text-sm max-w-3xl poppins-medium text-center",
+                confirmButton: "primary-btn",
+            },
+            didOpen: (popup) => {
+                popup
+                    .querySelector(".swal2-title")
+                    ?.classList.remove("swal2-title");
+                popup
+                    .querySelector(".swal2-confirm")
+                    ?.classList.remove("swal2-confirm");
+            },
+        });
+    } else if (type === "info") {
+        Swal.fire({
+            icon: "info",
+            title: "Notice",
             html: `<p class="leading-relaxed text-slate-500 text-sm max-w-3xl poppins-regular">${message}</p>`,
             customClass: {
                 title: "leading-relaxed text-slate-500 text-sm max-w-3xl poppins-medium text-center",
@@ -100,4 +146,25 @@ const renderMustache = (data, containerId, templateId) => {
     } catch (err) {
         console.error("Exception on renderMustahce : ", err);
     }
+};
+
+const runShepherdTour = (setupStepsFn) => {
+    const isMobile = window.innerWidth < 768;
+    console.log(isMobile);
+    if (isMobile) {
+        handleException(
+            "Sorry tour is not available in mobile device, please switch to your laptop or monitor",
+            "info"
+        );
+        return;
+    }
+    const tour = new Shepherd.Tour({
+        useModalOverlay: true,
+        defaultStepOptions: {
+            scrollTo: { behavior: "smooth", block: "center" },
+            cancelIcon: { enabled: true },
+        },
+    });
+    setupStepsFn(tour);
+    tour.start();
 };

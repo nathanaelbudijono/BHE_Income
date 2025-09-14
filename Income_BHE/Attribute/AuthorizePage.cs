@@ -23,18 +23,31 @@ namespace Income_BHE.Attribute
                 return;
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44354/api/v1/authentication/validate-token");
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44354/api/v1/authentication/validate-token");
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-            var response = await client.SendAsync(request);
+                var response = await client.SendAsync(request);
 
-            if (!response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
+                {
+                    context.Result = new RedirectToActionResult("UnAuthorized", "Authentication", null);
+                    return;
+                }
+            }
+            catch (HttpRequestException) 
+            {
+                context.Result = new RedirectToActionResult("UnAuthorized", "Authentication", null);
+                return;
+            }
+            catch (Exception) 
             {
                 context.Result = new RedirectToActionResult("UnAuthorized", "Authentication", null);
                 return;
             }
 
-            await next(); 
+            await next();
         }
 
     }

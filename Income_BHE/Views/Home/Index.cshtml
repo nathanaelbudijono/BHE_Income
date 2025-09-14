@@ -1,1 +1,91 @@
-<h1>hi</h1>
+<main>
+    <section>
+        <Typography id="greetings" variant="h4" font="bold" color="dark"></Typography>
+        <Typography>Here's what's happening on your workspace today.</Typography>
+    </section>
+    <section class="mt-10">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="space-y-6 lg:col-span-2">
+                <partial name="_MyTask" />
+                <partial name="_Announcement" />
+            </div>
+
+            <div>
+                <partial name="_RecentActivity" />
+            </div>
+        </div>
+    </section>
+</main>
+
+@section scripts {
+    <script src="~/js/shepard/home.js"></script>
+    <script>
+           const HomeManager = {
+               dom : { greetings : null },
+               setGreetings () {
+                   const data = localStorage.getItem("user-info");
+                   const userInfo = JSON.parse(data);
+                   const currentHour = getTimeOfDay();
+                   this.dom.greetings.innerText = `${currentHour}, ${userInfo.userName}!`;
+               },
+               init () {
+                   this.dom.greetings = document.getElementById("greetings");
+                   this.setGreetings();
+               }
+           };
+
+           const MyTaskManager = {
+               state : { myTaskList : [] },
+               async getMyTask(){
+                   const response = await getFetcher(`${API_URL}/my-task/get`);
+                   if(response.status === "success"){
+                     this.state.myTaskList = response.data.map(task => {
+                           switch(task.level.toLowerCase()){
+                               case "high":
+                                   return { ...task, bgClass: "bg-destructive-accent-200", borderClass: "border-destructive-accent-100", badgeClass: "bg-destructive-100" };
+                               case "medium":
+                                   return { ...task, bgClass: "bg-secondary-accent-200", borderClass: "border-secondary-accent-100", badgeClass: "bg-secondary-200" };
+                               default:
+                                   return { ...task, bgClass: "bg-primary-accent-200", borderClass: "border-primary-accent-100", badgeClass: "bg-primary-200" };
+                           }
+                       });
+                   }
+               },
+                renderTasks(){
+                    if(this.state.myTaskList.length > 0){
+                        renderMustache( { tasks: this.state.myTaskList },"my-task-list","my-task-template")
+                    } else {
+                        renderMustache( { tasks: this.state.myTaskList },"my-task-list","my-task-template-empty")
+                    }
+
+               },
+               setUpEventListner(){
+                     document.addEventListener('click', (e) => {
+                      if (e.target.closest('#start-tour-btn')) {
+                        runShepherdTour(homeTour);
+                      }
+                    });
+               },
+               async init(){
+                   await this.getMyTask();
+                   this.renderTasks();
+                   this.setUpEventListner();
+
+                    const isFirstVisit = !localStorage.getItem('homeTourCompleted');
+                    if (isFirstVisit) {
+                        runShepherdTour(homeTour);
+                        localStorage.setItem('homeTourCompleted', 'true');
+                    }
+               }
+           };
+
+           
+
+           document.addEventListener('DOMContentLoaded', async () => {
+               generateBreadcrumbs(HOME_BREADCRUMBS);
+               HomeManager.init();
+               await MyTaskManager.init();
+
+           });
+    </script>
+}
