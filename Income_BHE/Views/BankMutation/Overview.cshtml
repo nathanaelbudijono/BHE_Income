@@ -1,0 +1,260 @@
+﻿<main class="px-6 py-4">
+    <section>
+        <Typography variant="h4" font="bold" color="dark">Overview</Typography>
+        <Typography>
+            A centralized summary of bank mutations processed and stored in our system.
+            Currently, integration is available for BCA mutation files, which can be uploaded,
+            parsed, and saved into the database for easier tracking and analysis
+        </Typography>
+    </section>
+    <section class="mt-10">
+        <Typography variant="h6" font="semibold" color="dark">This Month Insights</Typography>
+        <Typography variant="sm">
+            Key highlights of bank mutations, transactions, and amounts processed this month.
+        </Typography>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-5">
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <Typography variant="p" font="semibold" color="dark">Total Integrations</Typography>
+                        <p class="text-2xl max-lg:text-xl poppins-bold text-slate-800 mt-1" id="integration-data"></p>
+                        <Typography variant="sm" class="mt-1">
+                            <span class="inline-flex items-center" id="integration-text"></span>
+                        </Typography>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="ri-bar-chart-fill text-lg text-primary-100"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <Typography variant="p" font="semibold" color="dark">Total Amount</Typography>
+                        <p class="text-2xl max-lg:text-xl poppins-bold text-slate-800 mt-1" id="payment-data"></p>
+                        <Typography variant="sm" class="mt-1" color="empty">
+                            <span class="inline-flex items-center" id="payment-text"></span>
+                        </Typography>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="ri-wallet-3-line text-lg text-success-100"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <Typography variant="p" font="semibold" color="dark">Total Transaction</Typography>
+                        <p class="text-2xl max-lg:text-xl poppins-bold text-slate-800 mt-1" id="transaction-data"></p>
+                        <Typography variant="sm" class="mt-1" color="empty">
+                            <span class="inline-flex items-center" id="transaction-text"></span>
+                        </Typography>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-200 rounded-lg flex items-center justify-center">
+                        <i class="ri-flashlight-line text-lg text-secondary-100"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <Typography variant="p" font="semibold" color="dark">Success Rate</Typography>
+                        <p class="text-2xl max-lg:text-xl poppins-bold text-slate-800 mt-1" id="success-data"></p>
+                        <Typography variant="sm" class="mt-1" color="empty">
+                            <span class="inline-flex items-center" id="success-text"></span>
+                        </Typography>
+                    </div>
+                    <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mt-10">
+        <Typography variant="h6" font="semibold" color="dark">Quick Actions</Typography>
+        <Typography variant="sm">Access your desired mutation type with ease</Typography>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-5">
+            <!-- Virtual Account -->
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="navigateToModule('virtual-account')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-primary-accent-200 rounded-lg flex items-center justify-center">
+                        <i class="ri-server-line text-primary-100 text-lg"></i>
+                    </div>
+                    <Typography id="va" variant="sm" color="dark" font="light" class="bg-neutral-accent-200 px-2 py-1 rounded-full">0 integrated</Typography>
+                </div>
+                <Typography variant="p" font="semibold" class="mb-2" color="dark">Virtual Account</Typography>
+                <Typography variant="sm" font="light">Digital account for receiving payments</Typography>
+                <div class="flex items-center text-accent text-sm font-medium mt-4">
+                    <Typography variant="sm" color="dark">View Details</Typography>
+                    <i class="ri-arrow-right-s-line w-5 h-5 ml-1"></i>
+                </div>
+            </div>
+
+            <!-- ATM -->
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="navigateToModule('atm')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="ri-money-dollar-box-line text-success-100 text-lg"></i>
+                    </div>
+                    <Typography id="atm" variant="sm" color="dark" font="light" class="bg-neutral-accent-200 px-2 py-1 rounded-full">0 integrated</Typography>
+                </div>
+                <Typography variant="p" font="semibold" class="mb-2" color="dark">ATM</Typography>
+                <Typography variant="sm" font="light">Cash withdrawal and deposit transactions</Typography>
+                <div class="flex items-center text-accent text-sm font-medium mt-4">
+                    <Typography variant="sm" color="dark">View Details</Typography>
+                    <i class="ri-arrow-right-s-line w-5 h-5 ml-1"></i>
+                </div>
+            </div>
+
+            <!-- Blu Autodebit -->
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="navigateToModule('blu-autodebit')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="ri-repeat-line text-pink-600 text-lg"></i>
+                    </div>
+                    <Typography id="blu" variant="sm" color="dark" font="light" class="bg-neutral-accent-200 px-2 py-1 rounded-full">0 integrated</Typography>
+                </div>
+                <Typography variant="p" font="semibold" class="mb-2" color="dark">Blu Autodebet</Typography>
+                <Typography variant="sm" font="light">Automatic recurring payments via BCA Blu</Typography>
+                <div class="flex items-center text-accent text-sm font-medium mt-4">
+                    <Typography variant="sm" color="dark">View Details</Typography>
+                    <i class="ri-arrow-right-s-line w-5 h-5 ml-1"></i>
+                </div>
+            </div>
+
+            <!-- Offline Autodebit -->
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="navigateToModule('offline-autodebit')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="ri-file-line text-secondary-100 text-lg"></i>
+                    </div>
+                    <Typography id="offline" variant="sm" color="dark" font="light" class="bg-neutral-accent-200 px-2 py-1 rounded-full">0 integrated</Typography>
+                </div>
+                <Typography variant="p" font="semibold" class="mb-2" color="dark">Offline Autodebet</Typography>
+                <Typography variant="sm" font="light">Recurring payments processed offline or manually</Typography>
+                <div class="flex items-center text-accent text-sm font-medium mt-4">
+                    <Typography variant="sm" color="dark">View Details</Typography>
+                    <i class="ri-arrow-right-s-line w-5 h-5 ml-1"></i>
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+@section scripts {
+    <script>
+        const BankMutationOverview = {
+            state  : {
+                quickActionData : [],
+                statistics : null,
+                dom : {
+                    quickAction  : {
+                    va : null,
+                     atm : null,
+                     blu : null,
+                     offline :null
+                    },
+                    insight : {
+                        integrationData:null,
+                        integrationText:null,
+                        transactionData:null,
+                        transactionText:null,
+                        paymentData:null,
+                        paymentText:null,
+                        successData:null,
+                        successText:null
+                    }
+                }
+
+            },
+           async getBankMutation(){
+               const response = await getFetcher(`${API_URL}/bank-mutation/quick-actions`);
+               if(response.status === "success"){
+                   this.state.quickActionData = response.data.integrations;
+                   this.state.statistics = response.data.statistics;
+               }
+            },
+            render(){
+                this.state.quickActionData.forEach(item => {
+                    switch(item.mutationType){
+                        case "VIRTUALACCOUNT":
+                            this.state.dom.quickAction.va.textContent = `${item.integrated} Integrated`;
+                            break;
+                        case "ATM":
+                            this.state.dom.quickAction.atm.textContent = `${item.integrated} Integrated`;
+                            break;
+                        case "BLUAUTODEBET":
+                            this.state.dom.quickAction.blu.textContent = `${item.integrated} Integrated`;
+                            break;
+                        case "OFFLINEAUTODEBET":
+                            this.state.dom.quickAction.offline.textContent = `${item.integrated} Integrated`;
+                            break;
+                    }
+                });
+              if(this.state.statistics){
+                 this.state.dom.insight.integrationData.textContent = this.state.statistics.totalIntegration.value;
+                 this.state.dom.insight.integrationText.textContent = this.state.statistics.totalIntegration.status;
+
+                 this.state.dom.insight.transactionData.textContent = this.state.statistics.totalTransaction.value;
+                 this.state.dom.insight.transactionText.textContent = this.state.statistics.totalTransaction.status;
+                 this.state.dom.insight.transactionText.classList.add(this.state.statistics.totalTransaction.color);
+
+                 this.state.dom.insight.paymentData.textContent = this.state.statistics.totalPayment.value;
+                 this.state.dom.insight.paymentText.textContent = this.state.statistics.totalPayment.status;
+                 this.state.dom.insight.paymentText.classList.add(this.state.statistics.totalPayment.color);
+
+                 this.state.dom.insight.successData.textContent = this.state.statistics.successPercentage.value;
+                 this.state.dom.insight.successText.textContent = this.state.statistics.successPercentage.status;
+                 this.state.dom.insight.successText.classList.add(this.state.statistics.successPercentage.color);
+             }
+            },
+            setUpEventListner(){
+                     document.addEventListener('click', (e) => {
+                      if (e.target.closest('#start-tour-btn')) {
+                        runShepherdTour(bankMutationOverViewTour);
+                      }
+                    });
+            },
+            getDom(){
+                this.state.dom.quickAction.va = document.getElementById("va");
+                this.state.dom.quickAction.atm = document.getElementById("atm");
+                this.state.dom.quickAction.blu = document.getElementById("blu");
+                this.state.dom.quickAction.offline = document.getElementById("offline");
+
+                this.state.dom.insight.integrationData = document.getElementById("integration-data");
+                this.state.dom.insight.integrationText = document.getElementById("integration-text");
+                this.state.dom.insight.transactionData = document.getElementById("transaction-data");
+                this.state.dom.insight.transactionText = document.getElementById("transaction-text");
+                this.state.dom.insight.paymentData = document.getElementById("payment-data");
+                this.state.dom.insight.paymentText = document.getElementById("payment-text");
+                this.state.dom.insight.successData = document.getElementById("success-data");
+                this.state.dom.insight.successText = document.getElementById("success-text");
+            },
+            async init(){
+                showLoader();
+                this.getDom();
+                await this.getBankMutation();
+                this.render();
+                this.setUpEventListner();
+                hideLoader();
+            }
+        }
+          document.addEventListener('DOMContentLoaded', async () => {
+
+              generateBreadcrumbs(BANK_MUTATION_OVERVIEW_BREADCRUMBS);
+              await BankMutationOverview.init();
+
+        });
+    </script>
+
+}

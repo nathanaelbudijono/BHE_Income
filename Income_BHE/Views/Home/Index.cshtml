@@ -1,4 +1,4 @@
-<main>
+<main class="px-6 py-4">
     <section>
         <Typography id="greetings" variant="h4" font="bold" color="dark"></Typography>
         <Typography>Here's what's happening on your workspace today.</Typography>
@@ -18,7 +18,6 @@
 </main>
 
 @section scripts {
-    <script src="~/js/shepard/home.js"></script>
     <script>
            const HomeManager = {
                dom : { greetings : null },
@@ -67,15 +66,18 @@
                     });
                },
                async init(){
+                   showLoader();
                    await this.getMyTask();
                    this.renderTasks();
                    this.setUpEventListner();
-
+                   hideLoader();
                     const isFirstVisit = !localStorage.getItem('homeTourCompleted');
                     if (isFirstVisit) {
                         runShepherdTour(homeTour);
                         localStorage.setItem('homeTourCompleted', 'true');
                     }
+
+                    
                }
            };
 

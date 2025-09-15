@@ -21,8 +21,9 @@ namespace Income_BHE.UiTagHelper
         { "h2", "leading-snug tracking-normal my-4 w-full text-2xl lg:text-4xl" },
         { "h3", "leading-snug tracking-normal my-4 w-full text-xl lg:text-3xl" },
         { "h4", "leading-snug tracking-normal my-4 w-full text-lg lg:text-2xl" },
-        { "h5", "leading-snug tracking-normal my-4 w-full text-base lg:text-xl" },
-        { "h6", "leading-snug tracking-normal my-4 w-full text-smd lg:text-lg" }
+        { "h5", "leading-snug tracking-normal my-3 w-full text-base lg:text-xl" },
+        { "h6", "leading-snug tracking-normal my-2 w-full text-smd lg:text-lg" },
+        { "card", "leading-snug tracking-normal my-4 w-full text-smd lg:text-lg"}
     };
 
         private static readonly Dictionary<string, string> ColorClasses = new()
@@ -32,6 +33,7 @@ namespace Income_BHE.UiTagHelper
             {"semimuted","text-gray-400" },
             { "light" , "text-white"},
             { "primary",  "text-primary-100" },
+            { "empty",  "" },
         };
         private static readonly Dictionary<string, string> FontClasses = new()
         {
@@ -59,7 +61,15 @@ namespace Income_BHE.UiTagHelper
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            output.TagName = Variant;
+            if (Variant == "card")
+            {
+                output.TagName = "h6";
+            } else
+            {
+                output.TagName = Variant;
+            }
+
+          
 
             var baseClass = VariantClasses.ContainsKey(Variant) ? VariantClasses[Variant] : VariantClasses["p"];
             var fontClass = FontClasses.ContainsKey(Font) ? FontClasses[Font] : FontClasses["regular"];

@@ -86,6 +86,10 @@
                  x-bind:class="showSidebar ? 'translate-x-0' : '-translate-x-full'"
                  aria-label="sidebar navigation">
                 <div>
+                    <a href="/home/index">
+                        <img src="~/images/logo-binus.png" class="w-32 mb-5 object-cover" />
+                    </a>
+            
                     <partial name="_CompanySwitcher" />
                     <partial name="_Menu" />
                 </div>
@@ -132,9 +136,6 @@
                                                 )
                     </div>
                     <div class="space-x-3">
-                        <button>
-                            <i class="ri-notification-2-line text-xl cursor-pointer hover:text-secondary-100 transition-colors duration-200"></i>
-                        </button>
                         <button id="start-tour-btn">
                             <i id="start-tour-icon"  class="ri-question-line text-xl cursor-pointer hover:text-primary-100 transition-colors duration-200"></i>
                         </button>
@@ -144,12 +145,17 @@
 
                 </section>
 
-                <div class="px-6 py-4">
+                <div>
                     @RenderBody()
+                    <footer class="border-t border-neutral-accent-100 text-center py-3 mt-15">
+                        <Typography variant="sm" font="light">© 2025 Finance Resource Management. All rights reserved.</Typography>
+                    </footer>
                 </div>
 
             </main>
+      
         </div>
+
     </div>
     <div id="loadPanel"></div>
 
@@ -159,6 +165,7 @@
     <script src="https://cdn.jsdelivr.net/npm/shepherd.js@8.3.1/dist/js/shepherd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.1/mustache.min.js" integrity="sha512-3GRj7sme01zpWwRNPNy48Rda1bD9cq34lqYG5vb8ZXGc+wRqsoBJ3+AC25IYW5w5SrWlzHqIpNIxZt5QF9sXLg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/js/scripts/constant.js"></script>
+    <script src="~/js/scripts/shepherd.js"></script>
     <script src="~/js/scripts/breadcrumbs.js"></script>
     <script src="~/js/scripts/utility.js"></script>
     <script src="~/js/scripts/fetcher.js"></script>

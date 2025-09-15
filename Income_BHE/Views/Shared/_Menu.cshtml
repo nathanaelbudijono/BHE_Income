@@ -23,7 +23,7 @@
           for (const item of items) {
             const hasChild = item.menuChild && item.menuChild.length > 0;
             const iconHtml = item.menuIcon ? `<i class="${item.menuIcon} mr-2"></i>` : "";
-            const link = item.menuLink || "#";
+            const link = item.menuLink !== "" ? `${BASE_URL}/${item.menuLink}` : "#";
 
             const parentClass = level === 0
               ? "leading-relaxed text-sm max-w-3xl text-slate-800 poppins-regular"
@@ -56,10 +56,8 @@
             container.innerHTML = this.buildMenu(this.state.availableMenu);
         },
         async init(){
-            showLoader();
             await this.getMenu();
             this.render();
-            hideLoader();
         }
     }
 

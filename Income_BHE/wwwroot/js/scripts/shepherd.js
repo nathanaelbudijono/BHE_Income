@@ -79,3 +79,14 @@ const homeTour = (tour) => {
         ],
     });
 };
+
+const bankMutationOverViewTour = (tour) => {
+    tour.addStep({
+        id: "overviewBankMutation",
+        text: "There are currently no tutorial for this page.",
+        buttons: [
+            { text: "Close", action: tour.cancel, classes: "neutral-btn" },
+        ],
+        modal: true,
+    });
+};
