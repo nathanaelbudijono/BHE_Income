@@ -14,3 +14,5 @@ const getTimeOfDay = () => {
         return "Good Night";
     }
 };
+
+const formatDate = (d) => (d ? d.toISOString().split("T")[0] : null);

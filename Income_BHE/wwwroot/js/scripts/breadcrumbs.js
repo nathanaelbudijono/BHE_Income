@@ -15,3 +15,18 @@ const BANK_MUTATION_OVERVIEW_BREADCRUMBS = [
         link: `${BASE_URL}/BankMutation/overview`,
     },
 ];
+
+const BANK_MUTATION_VA_BREADCRUMBS = [
+    {
+        text: "Bank Mutation",
+        link: `${BASE_URL}/BankMutation/overview`,
+    },
+    {
+        text: "Categories",
+        link: ``,
+    },
+    {
+        text: "Virtual Account",
+        link: `${BASE_URL}/BankMutation/virtualaccount`,
+    },
+];

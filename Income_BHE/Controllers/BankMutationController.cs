@@ -8,5 +8,10 @@ namespace Income_BHE.Controllers
         {
             return View();
         }
+
+        public IActionResult VirtualAccount()
+        {
+            return View();
+        }
     }
 }

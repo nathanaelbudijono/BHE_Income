@@ -20,3 +20,40 @@
 .dx-autocomplete.dx-editor-outlined.dx-state-focused {
     border-radius: 50px !important;
 }
+
+
+.dx-label {
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-size: 0.875rem;
+}
+
+.dx-icon {
+    font-size:1.25rem !important;
+}
+
+
+td {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dx-list-item-content {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dx-treeview-item-content {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dx-texteditor-input {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}

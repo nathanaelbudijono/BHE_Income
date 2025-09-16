@@ -1,4 +1,4 @@
-﻿<main class="px-6 py-4">
+﻿<main class="px-6 py-4 min-h-screen">
     <section>
         <Typography variant="h4" font="bold" color="dark">Overview</Typography>
         <Typography>
@@ -16,7 +16,7 @@
             <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <Typography variant="p" font="semibold" color="dark">Total Integrations</Typography>
+                        <Typography variant="p" font="semibold" color="dark">Total Uploads</Typography>
                         <p class="text-2xl max-lg:text-xl poppins-bold text-slate-800 mt-1" id="integration-data"></p>
                         <Typography variant="sm" class="mt-1">
                             <span class="inline-flex items-center" id="integration-text"></span>
@@ -79,7 +79,7 @@
         <Typography variant="sm">Access your desired mutation type with ease</Typography>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-5">
             <!-- Virtual Account -->
-            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="navigateToModule('virtual-account')">
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="window.location.href = '@Url.Action("VirtualAccount", "BankMutation")'">
                 <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-primary-accent-200 rounded-lg flex items-center justify-center">
                         <i class="ri-server-line text-primary-100 text-lg"></i>
@@ -188,16 +188,16 @@
                 this.state.quickActionData.forEach(item => {
                     switch(item.mutationType){
                         case "VIRTUALACCOUNT":
-                            this.state.dom.quickAction.va.textContent = `${item.integrated} Integrated`;
+                            this.state.dom.quickAction.va.textContent = `${item.integrated} Uploaded`;
                             break;
                         case "ATM":
-                            this.state.dom.quickAction.atm.textContent = `${item.integrated} Integrated`;
+                            this.state.dom.quickAction.atm.textContent = `${item.integrated} Uploaded`;
                             break;
                         case "BLUAUTODEBET":
-                            this.state.dom.quickAction.blu.textContent = `${item.integrated} Integrated`;
+                            this.state.dom.quickAction.blu.textContent = `${item.integrated} Uploaded`;
                             break;
                         case "OFFLINEAUTODEBET":
-                            this.state.dom.quickAction.offline.textContent = `${item.integrated} Integrated`;
+                            this.state.dom.quickAction.offline.textContent = `${item.integrated} Uploaded`;
                             break;
                     }
                 });
@@ -251,8 +251,8 @@
         }
           document.addEventListener('DOMContentLoaded', async () => {
 
-              generateBreadcrumbs(BANK_MUTATION_OVERVIEW_BREADCRUMBS);
-              await BankMutationOverview.init();
+                                          generateBreadcrumbs(BANK_MUTATION_OVERVIEW_BREADCRUMBS);
+                                          await BankMutationOverview.init();
 
         });
     </script>
