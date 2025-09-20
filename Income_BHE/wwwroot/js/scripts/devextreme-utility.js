@@ -46,3 +46,13 @@ const getDxTextBox = (id) => {
         },
     });
 };
+
+
+const devExtremeBeforeSend = (method, ajaxOptions) => {
+    ajaxOptions.headers = ajaxOptions.headers || {};
+
+    var token = localStorage.getItem('stamp-token');
+    if (token) {
+        ajaxOptions.headers['Authorization'] = 'Bearer ' + token;
+    }
+}

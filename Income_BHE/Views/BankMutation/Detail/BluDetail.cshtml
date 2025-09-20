@@ -1,0 +1,43 @@
+﻿<main class="px-6 py-4 min-h-screen space-y-5 2xl:space-y-10">
+    <section>
+        <Typography variant="h4" font="bold" color="dark" id="title">
+             Blu Autodebet Mutation
+        </Typography>
+        <Typography>Detailed breakdown of transactions from the selected mutation file</Typography>
+    </section>
+    <section class="grid grid-cols-2 gap-y-4 gap-x-12 max-sm:grid-cols-1">
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Mutation Type</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="mutationType" color="dark">Blu Autodebet</Typography>
+        </div>
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Bank Id</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="mutationType" color="dark">BCA</Typography>
+        </div>
+    </section>
+    <section id="blu-detail-grid" class="h-full" style="max-height:800px;"></section>
+</main>
+
+@section scripts {
+    <script src="~/js/Views/BankMutation/BluAutodebet/bluDetail.js"></script>
+    <script>
+
+           document.addEventListener('DOMContentLoaded', async () => {
+            const file = getUrlValueParam("file");
+            try{
+                showLoader();
+                BluDetailManager.init();
+                initBluDetailMutationGrid();
+                generateBreadcrumbs([...BANK_MUTATION_BLU_BREADCRUMBS, {
+                        text:file,
+                        link:""
+                }]);
+                hideLoader();
+            }catch(err){
+                hideLoader();
+            }
+        });
+    </script>
+}

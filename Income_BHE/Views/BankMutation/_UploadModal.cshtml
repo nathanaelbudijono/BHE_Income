@@ -1,0 +1,131 @@
+﻿<style>
+
+        .file-item.uploading {
+            @@apply bg-blue-50 border-blue-200;
+        }
+
+        .file-item.success {
+            @@apply bg-green-50 border-green-200;
+        }
+
+        .file-item.error {
+            @@apply bg-red-50 border-red-200;
+        }
+</style>
+<div x-data="uploadModal()"
+     @@keydown.escape.window ="closeModal()"
+     :class="{ 'z-40': open }"
+     class="relative z-50 w-auto h-auto">
+
+    <template x-teleport="body">
+        <div x-show="open"
+             x-cloak
+             class="fixed top-0 left-0 z-[99] flex items-center justify-center w-screen h-screen">
+
+            <div x-show="open"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-300"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @@click ="closeModal()"
+                 class="absolute inset-0 w-full h-full bg-black/40">
+            </div>
+
+            <div x-show="open"
+                 x-trap.inert.noscroll="open"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 class="relative px-7 py-6 w-full bg-white sm:max-w-lg sm:rounded-lg">
+
+                <div class="flex pb-4">
+                    <Typography font="medium" color="dark">Upload New Bank Mutation</Typography>
+                </div>
+
+                <div class="relative w-auto py-6">
+                    <div @@drop ="handleDrop($event)"
+                         @@dragover.prevent
+                         @@dragenter.prevent
+                         @@click ="$refs.fileInput.click()"
+                         :class="{ 'border-blue-400 bg-blue-50': isDragging }"
+                         class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors cursor-pointer">
+
+                        <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <div class="flex flex-col gap-1">
+                            <Typography variant="sm">Drop files here or click to browse</Typography>
+                            <Typography variant="sm">Supports .txt</Typography>
+                        </div>
+              
+
+                        <input type="file"
+                               x-ref="fileInput"
+                               @@change ="handleFileSelect($event)"
+                               multiple
+                               accept=".txt"
+                               class="hidden">
+                    </div>
+
+                    <div x-show="files.length > 0" class="mt-6">
+                        <Typography class="mb-3">Selected Files (<span x-text="files.length"></span>)</Typography>
+                        <div class="space-y-2 max-h-50 overflow-y-auto">
+                            <template x-for="(file, index) in files" :key="index">
+                                <div class="file-item bg-neutral-accent-200 rounded-lg border border-neutral-accent-100 p-2 flex items-center justify-between" :class="file.status">
+                                    <div class="flex items-center gap-3 flex-1">
+                                        <i class="ri-file-text-line text-slate-500"></i>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-slate-800 truncate" x-text="file.name"></p>
+                                            <p class="text-xs text-slate-500" x-text="formatFileSize(file.size)"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-2">
+
+                                        <div x-show="file.status === 'pending'">
+                                            <button @@click ="removeFile(index)" class="text-descrutive-100 hover:text-destructive-200">
+                                                <i class="ri-close-line"></i>
+                                            </button>
+                                        </div>
+
+                                        <div x-show="file.status === 'uploading'" class="text-primary-100">
+                                            <i class="ri-loader-4-line animate-spin"></i>
+                                        </div>
+
+                                        <div x-show="file.status === 'success'" class="text-success-100">
+                                            <i class="ri-check-line"></i>
+                                        </div>
+
+                                        <div x-show="file.status === 'error'" class="text-destructive-100">
+                                            <i class="ri-error-warning-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="flex justify-end gap-3 pt-4">
+                    <button @@click ="closeModal()" class="neutral-btn">Cancel</button>
+                    <button @@click ="uploadFiles()"
+                            :disabled="files.length === 0 || isUploading"
+                            :class="{ 'opacity-50 cursor-not-allowed': files.length === 0 || isUploading }"
+                            class="primary-btn">
+                        <span x-show="!isUploading">Upload Files</span>
+                        <span x-show="isUploading" class="flex items-center gap-2">
+                            <i class="ri-loader-4-line animate-spin"></i>
+                            Uploading...
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+</div>

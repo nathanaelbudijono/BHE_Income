@@ -1,4 +1,4 @@
-﻿<main class="px-6 py-4 min-h-screen">
+﻿<main class="px-6 py-4 min-h-screen space-y-5 2xl:space-y-10">
     <section>
         <Typography variant="h4" font="bold" color="dark">Overview</Typography>
         <Typography>
@@ -7,17 +7,17 @@
             parsed, and saved into the database for easier tracking and analysis
         </Typography>
     </section>
-    <section class="mt-10">
+    <section>
         <Typography variant="h6" font="semibold" color="dark">This Month Insights</Typography>
         <Typography variant="sm">
             Key highlights of bank mutations, transactions, and amounts processed this month.
         </Typography>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-3 2xl:mt-5">
             <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
                 <div class="flex items-center justify-between">
                     <div>
                         <Typography variant="p" font="semibold" color="dark">Total Uploads</Typography>
-                        <p class="text-2xl max-lg:text-xl poppins-bold text-slate-800 mt-1" id="integration-data"></p>
+                        <p class="text-xl max-lg:text-lg poppins-bold text-slate-800 mt-1" id="integration-data"></p>
                         <Typography variant="sm" class="mt-1">
                             <span class="inline-flex items-center" id="integration-text"></span>
                         </Typography>
@@ -31,7 +31,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <Typography variant="p" font="semibold" color="dark">Total Amount</Typography>
-                        <p class="text-2xl max-lg:text-xl poppins-bold text-slate-800 mt-1" id="payment-data"></p>
+                        <p class="text-xl max-lg:text-lg poppins-bold text-slate-800 mt-1" id="payment-data"></p>
                         <Typography variant="sm" class="mt-1" color="empty">
                             <span class="inline-flex items-center" id="payment-text"></span>
                         </Typography>
@@ -45,7 +45,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <Typography variant="p" font="semibold" color="dark">Total Transaction</Typography>
-                        <p class="text-2xl max-lg:text-xl poppins-bold text-slate-800 mt-1" id="transaction-data"></p>
+                        <p class="text-xl max-lg:text-lg poppins-bold text-slate-800 mt-1" id="transaction-data"></p>
                         <Typography variant="sm" class="mt-1" color="empty">
                             <span class="inline-flex items-center" id="transaction-text"></span>
                         </Typography>
@@ -59,7 +59,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <Typography variant="p" font="semibold" color="dark">Success Rate</Typography>
-                        <p class="text-2xl max-lg:text-xl poppins-bold text-slate-800 mt-1" id="success-data"></p>
+                        <p class="text-xl max-lg:text-lg poppins-bold text-slate-800 mt-1" id="success-data"></p>
                         <Typography variant="sm" class="mt-1" color="empty">
                             <span class="inline-flex items-center" id="success-text"></span>
                         </Typography>
@@ -73,11 +73,10 @@
             </div>
         </div>
     </section>
-
-    <section class="mt-10">
+    <section>
         <Typography variant="h6" font="semibold" color="dark">Quick Actions</Typography>
         <Typography variant="sm">Access your desired mutation type with ease</Typography>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-3 2xl:mt-5">
             <!-- Virtual Account -->
             <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="window.location.href = '@Url.Action("VirtualAccount", "BankMutation")'">
                 <div class="flex items-center justify-between mb-4">
@@ -94,24 +93,8 @@
                 </div>
             </div>
 
-            <!-- ATM -->
-            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="navigateToModule('atm')">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                        <i class="ri-money-dollar-box-line text-success-100 text-lg"></i>
-                    </div>
-                    <Typography id="atm" variant="sm" color="dark" font="light" class="bg-neutral-accent-200 px-2 py-1 rounded-full">0 integrated</Typography>
-                </div>
-                <Typography variant="p" font="semibold" class="mb-2" color="dark">ATM</Typography>
-                <Typography variant="sm" font="light">Cash withdrawal and deposit transactions</Typography>
-                <div class="flex items-center text-accent text-sm font-medium mt-4">
-                    <Typography variant="sm" color="dark">View Details</Typography>
-                    <i class="ri-arrow-right-s-line w-5 h-5 ml-1"></i>
-                </div>
-            </div>
-
             <!-- Blu Autodebit -->
-            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="navigateToModule('blu-autodebit')">
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="window.location.href = '@Url.Action("BluAutodebet", "BankMutation")'">
                 <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
                         <i class="ri-repeat-line text-pink-600 text-lg"></i>
@@ -127,7 +110,7 @@
             </div>
 
             <!-- Offline Autodebit -->
-            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="navigateToModule('offline-autodebit')">
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="window.location.href = '@Url.Action("OfflineAutodebet", "BankMutation")'">
                 <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
                         <i class="ri-file-line text-secondary-100 text-lg"></i>
@@ -141,7 +124,21 @@
                     <i class="ri-arrow-right-s-line w-5 h-5 ml-1"></i>
                 </div>
             </div>
-
+            <!-- ATM -->
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6 card-hover cursor-pointer" onclick="window.location.href = '@Url.Action("Atm", "BankMutation")'">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="ri-money-dollar-box-line text-success-100 text-lg"></i>
+                    </div>
+                    <Typography id="atm" variant="sm" color="dark" font="light" class="bg-neutral-accent-200 px-2 py-1 rounded-full">0 integrated</Typography>
+                </div>
+                <Typography variant="p" font="semibold" class="mb-2" color="dark">ATM</Typography>
+                <Typography variant="sm" font="light">Cash withdrawal and deposit transactions</Typography>
+                <div class="flex items-center text-accent text-sm font-medium mt-4">
+                    <Typography variant="sm" color="dark">View Details</Typography>
+                    <i class="ri-arrow-right-s-line w-5 h-5 ml-1"></i>
+                </div>
+            </div>
 
         </div>
 
@@ -221,7 +218,7 @@
             setUpEventListner(){
                      document.addEventListener('click', (e) => {
                       if (e.target.closest('#start-tour-btn')) {
-                        runShepherdTour(bankMutationOverViewTour);
+                        runShepherdTour(noTour);
                       }
                     });
             },

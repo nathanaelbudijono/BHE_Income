@@ -1,4 +1,4 @@
-﻿const BcaVirtualAccountManager = {
+﻿const OfflineAutodebetManager = {
     state: {
         data: null,
         dom: {
@@ -10,7 +10,7 @@
         filesGrid: null
     },
     async getInsight() {
-        const response = await getFetcher(`${API_URL}/bank-mutation/insight/VIRTUALACCOUNT`)
+        const response = await getFetcher(`${API_URL}/bank-mutation/insight/OFFLINEAUTODEBET`)
         if (response.status === "success") {
             this.state.data = response.data
         }
@@ -27,19 +27,24 @@
         this.state.dom.transaction = document.getElementById("transaction-data");
         this.state.dom.lastUpload = document.getElementById("upload-data");
     },
+    setUpEventListner() {
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#start-tour-btn')) {
+                runShepherdTour(bankMutationOfflineTour);
+            }
+        });
+    },
     async init() {
-
         this.getDom();
         await this.getInsight();
         this.render();
+        this.setUpEventListner();
         hideLoader();
-
-
     }
 };
 
-const initBcaVirtualAccountGrid = () => {
-    BcaVirtualAccountManager.state.filesGrid = $("#va-mutation-grid").dxDataGrid({
+const initOfflineFilesGrid = () => {
+    OfflineAutodebetManager.state.filesGrid = $("#offline-files-grid").dxDataGrid({
         showBorders: true,
         columnResizingMode: "widget",
         columnAutoWidth: true,
@@ -59,6 +64,10 @@ const initBcaVirtualAccountGrid = () => {
             enabled: true,
             showIndicator: true,
             showPane: true,
+        },
+        filterRow: {
+            visible: true,
+            applyFilter: 'auto',
         },
         focusedRowEnabled: true,
         onFocusedRowChanging(e) {
@@ -91,14 +100,14 @@ const initBcaVirtualAccountGrid = () => {
         onExporting(e) {
             if (e.format === 'xlsx') {
                 const workbook = new ExcelJS.Workbook();
-                const worksheet = workbook.addWorksheet('VirtualAccount');
+                const worksheet = workbook.addWorksheet('BluAutodebet');
                 DevExpress.excelExporter.exportDataGrid({
                     component: e.component,
                     worksheet,
                     autoFilterEnabled: true,
                 }).then(() => {
                     workbook.xlsx.writeBuffer().then((buffer) => {
-                        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'VirtualAccount.xlsx');
+                        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'BluAutodebet.xlsx');
                     });
                 });
             }
@@ -108,7 +117,7 @@ const initBcaVirtualAccountGrid = () => {
                     jsPDFDocument: doc,
                     component: e.component,
                 }).then(() => {
-                    doc.save('VirtualAccount.pdf');
+                    doc.save('BluAutodebet.pdf');
                 });
             }
         },
@@ -116,7 +125,6 @@ const initBcaVirtualAccountGrid = () => {
             {
                 caption: "",
                 width: 80,
-                fixed: true,
                 alignmen6: "center",
                 cellTemplate: function (container, options) {
                     $("<div>")
@@ -133,7 +141,7 @@ const initBcaVirtualAccountGrid = () => {
                             onItemClick: function (e) {
                                 switch (e.itemData.id) {
                                     case "detail":
-                                        handleShowEditBankPopup(options);
+                                        window.location.href = `${BASE_URL}/BankMutation/OfflineAutodebet/Detail?file=${encodeURIComponent(options.data.MutationFileName)}&bankId=${encodeURIComponent(options.data.BankId)}`;
                                         break;
                                 }
                             },
@@ -144,73 +152,44 @@ const initBcaVirtualAccountGrid = () => {
                         .appendTo(container);
                 }
             },
-            { dataField: "BankId", caption: "Bank", fixed: true },
-            { dataField: "MutationFileName", caption: "File Name", fixed: true },
-            { dataField: "MutationDate", caption: "Mutation Date", fixed: true },
-            { dataField: "CompanyName", caption: "Company Name", fixed: true },
-            { dataField: "RetensiNo", caption: "Retension Number", fixed: true },
-            { dataField: "ReportNo", caption: "Report Number", fixed: true },
+            { dataField: "BankId", caption: "Bank" },
+            { dataField: "MutationFileName", caption: "File Name" },
+            { dataField: "MutationDate" },
+            { dataField: "CompanyId" },
+            { dataField: "CompanyName" },
+            { dataField: "RetensiNo", caption: "Retension Number" },
+            { dataField: "ReportNo", caption: "Report Number" },
             {
                 dataField: "EntryDate",
                 caption: "Upload Date",
-                fixed: true,
-                cellTemplate: function (container, options) {
-                    if (options.value) {
-                        const dateOnly = options.value.split("T")[0];
-                        $("<span>").text(dateOnly).appendTo(container);
+                dataType: "date",
+                calculateCellValue: function (rowData) {
+                    if (rowData.EntryDate) {
+                        return new Date(rowData.EntryDate);
                     }
-                },
+                    return null;
+                }
             },
         ],
         toolbar: {
             items: [
-                {
-                    location: "before",
-                    widget: "dxTextBox",
-                    options: {
-                        width: 200, 
-                        placeholder: "Search file name",
-                        mode: "search",
-                        showClearButton: true,
-                        valueChangeEvent: "keyup",
-                        onValueChanged: function (e) {
-                            const dataGrid = BcaVirtualAccountManager.state.filesGrid;
-                            const searchValue = e.value || "";
-
-                            dataGrid.clearFilter();
-
-                            if (searchValue) {
-                                const searchExpr = ["MutationFileName"];
-                                dataGrid.filter(function (item) {
-                                    for (let i = 0; i < searchExpr.length; i++) {
-                                        const value = item[searchExpr[i]];
-                                        if (value && value.toString().toLowerCase().indexOf(searchValue.toLowerCase()) !== -1) {
-                                            return true;
-                                        }
-                                    }
-                                    return false;
-                                });
-                            }
-                        }
-                    }
-                },
-                "exportButton", 
+                "exportButton",
                 {
                     name: "columnChooserButton",
                     location: "after"
                 }
             ]
         },
-        dataSource: getVaFilesDataSource(),
+        dataSource: getOfflineDataSource(),
         keyExpr: "MutationFileName"
     }).dxDataGrid("instance");
 };
 
-const getVaFilesDataSource = () => {
+const getOfflineDataSource = (type) => {
     return new DevExpress.data.CustomStore({
         key: "MutationFileName",
         load: async function (loadOptions) {
-            const dateRange = $("#vaDateRange").dxDateRangeBox("instance").option("value") || [];
+            const dateRange = $("#offlineDateRange").dxDateRangeBox("instance").option("value") || [];
 
             const startDate = dateRange[0] ? new Date(dateRange[0]) : null;
             const endDate = dateRange[1] ? new Date(dateRange[1]) : null;
@@ -219,7 +198,7 @@ const getVaFilesDataSource = () => {
             const payload = {
                 LoadOptions: loadOptions,
                 FileName: "empty",
-                MutationType: "VIRTUALACCOUNT",
+                MutationType: "OFFLINEAUTODEBET",
                 MutationStartDate: formatDate(startDate),
                 MutationEndDate: formatDate(endDate),
                 BankId: "BCA"
@@ -233,10 +212,12 @@ const getVaFilesDataSource = () => {
 
         }
     })
+
+
 };
 
-const onVaDateRangeChanged = (e) => {
-    if (BcaVirtualAccountManager.state.filesGrid) {
-        BcaVirtualAccountManager.state.filesGrid.refresh();
+const onOfflineValueChanged = (e) => {
+    if (OfflineAutodebetManager.state.filesGrid) {
+        OfflineAutodebetManager.state.filesGrid.refresh();
     }
-}
+};

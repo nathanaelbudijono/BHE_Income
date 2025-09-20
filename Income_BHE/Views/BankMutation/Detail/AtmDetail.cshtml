@@ -1,0 +1,94 @@
+﻿<main class="px-6 py-4 min-h-screen space-y-5 2xl:space-y-10">
+    <section>
+        <Typography variant="h4" font="bold" color="dark" id="title">
+            ATM Mutation
+        </Typography>
+        <Typography>Detailed breakdown of transactions from the selected mutation file</Typography>
+    </section>
+
+    <section class="grid grid-cols-2 gap-y-4 gap-x-12 max-sm:grid-cols-1">
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Mutation Type</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="mutationType" color="dark">ATM</Typography>
+        </div>
+
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Bank Id</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="bankId" color="dark"></Typography>
+        </div>
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">File Name</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="fileName" color="dark" class="truncate"></Typography>
+        </div>
+
+
+
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Company Id</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="companyId" color="dark"></Typography>
+        </div>
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Mutation Date</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="mutationDate" color="dark"></Typography>
+        </div>
+
+
+
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Retension Number</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="retensionNumber" color="dark"></Typography>
+        </div>
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Company Name</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="companyName" color="dark" class="truncate"></Typography>
+        </div>
+
+
+
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Report Number</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="reportNumber" color="dark"></Typography>
+        </div>
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Branch</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="branch" color="dark" class="truncate"></Typography>
+        </div>
+        <div class="grid grid-cols-[150px_20px_1fr] items-center">
+            <Typography font="medium" color="dark">Upload Date</Typography>
+            <Typography font="medium" color="dark">:</Typography>
+            <Typography id="uploadDate" color="dark"></Typography>
+        </div>
+    </section>
+    <section id="atm-detail-mutation-grid" class="h-full" style="max-height:800px;"></section>
+</main>
+
+@section scripts {
+    <script src="~/js/Views/BankMutation/Atm/atmDetail.js"></script>
+    <script>
+           document.addEventListener('DOMContentLoaded', async () => {
+            const file = getUrlValueParam("file");
+            try{
+                showLoader();
+
+                AtmDetailManager.init();
+                initAtmDetailMutationGrid();
+                generateBreadcrumbs([...BANK_MUTATION_ATM_BREADCRUMBS, {
+                        text:file,
+                        link:""
+                }]);
+                hideLoader();
+            }catch(err){
+                hideLoader();
+            }
+        });
+    </script>
+}

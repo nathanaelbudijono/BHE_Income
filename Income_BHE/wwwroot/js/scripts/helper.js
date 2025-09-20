@@ -16,3 +16,9 @@ const getTimeOfDay = () => {
 };
 
 const formatDate = (d) => (d ? d.toISOString().split("T")[0] : null);
+
+const  getUrlValueParam = (param) => {
+    let url = new URL(window.location.href);
+   return url.searchParams.get(param);
+
+};

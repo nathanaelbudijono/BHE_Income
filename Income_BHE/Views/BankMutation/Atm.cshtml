@@ -1,0 +1,100 @@
+﻿@using System.Globalization
+<main class="px-6 py-4 min-h-screen space-y-5 2xl:space-y-10">
+    <section>
+        <Typography variant="h4" font="bold" color="dark">ATM</Typography>
+        <Typography>
+            This section provides access to ATM mutation data. You can view detailed records of incoming transactions, and export the data to Excel for further analysis.
+        </Typography>
+    </section>
+    <section>
+        <Typography variant="h6" font="semibold" color="dark">This Month Insights</Typography>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-3 2xl:mt-5" id="atm-insights">
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <Typography variant="p" font="semibold" color="dark">Total Uploads</Typography>
+                        <p class="text-xl max-lg:text-lg poppins-bold text-slate-800 mt-1" id="integration-data"></p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="ri-bar-chart-fill text-lg text-primary-100"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <Typography variant="p" font="semibold" color="dark">Total Amount</Typography>
+                        <p class="text-xl max-lg:text-lg poppins-bold text-slate-800 mt-1" id="amount-data"></p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="ri-pulse-fill text-lg text-success-100"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <Typography variant="p" font="semibold" color="dark">Total Transaction</Typography>
+                        <p class="text-xl max-lg:text-lg poppins-bold text-slate-800 mt-1" id="transaction-data"></p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-200 rounded-lg flex items-center justify-center">
+                        <i class="ri-funds-line text-lg text-purple-600"></i></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <Typography variant="p" font="semibold" color="dark">Last Uploaded</Typography>
+                        <p class="text-xl max-lg:text-lg poppins-bold text-slate-800 mt-1" id="upload-data"></p>
+                    </div>
+                    <div class="w-12 h-12 bg-secondary-accent-200 rounded-lg flex items-center justify-center">
+                        <i class="ri-time-line text-lg text-secondary-100"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <Typography variant="h6" font="semibold" color="dark">Mutations</Typography>
+        <div class="flex justify-between items-center gap-5 mt-3 2xl:mt-5">
+            <button id="atm-offline" class="primary-btn h-fit" onclick="openUploadMutationModal()"><i class="ri-upload-cloud-2-line mr-2"></i>Upload</button>
+            @(Html.DevExtreme().DateRangeBox()
+                        .Width(400)
+                        .StartDateLabel("Mutation Date From")
+                        .EndDateLabel("Mutation Date To")
+                        .OnValueChanged("onAtmValueChanged")
+                        .ID("atmDateRange")
+                        .Value(new[] {
+                        new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+                        DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+                        })
+                        )
+        </div>
+        <div id="atm-files-grid" class="h-full mt-5" style="max-height:600px;">
+        </div>
+    </section>
+    <partial name="_UploadModal" />
+</main>
+
+@section scripts {
+    <script src="~/js/Views/BankMutation/Atm/atm.js"></script>
+    <script src="~/js/Views//BankMutation/uploadModal.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try{
+                showLoader();
+                sessionStorage.setItem("current-mutation-type", "atm");
+                generateBreadcrumbs(BANK_MUTATION_ATM_BREADCRUMBS);
+                AtmManager.init();
+                initAtmFilesGrid();
+                hideLoader();
+            }catch(err){
+                hideLoader();
+            }
+
+        });
+
+
+    </script>
+}

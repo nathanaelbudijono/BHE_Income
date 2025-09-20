@@ -87,7 +87,7 @@
         <div class="flex flex-1 overflow-hidden">
 
             <nav x-cloak
-                 class="fixed top-0 left-0 z-20 h-full w-60 md:w-64 flex-shrink-0 flex-col border-r border-neutral-accent-100 bg-neutral-accent-200 px-4 pb-4 pt-2 transform transition-transform duration-500 flex justify-between"
+                 class="fixed top-0 left-0 z-20 h-full w-60 md:w-64 flex-shrink-0 flex-col border-r border-neutral-accent-100 bg-neutral-accent-200 px-4 pb-4 pt-2 transform transition-transform duration-500 flex justify-between overflow-y-auto"
                  x-bind:class="showSidebar ? 'translate-x-0' : '-translate-x-full'"
                  aria-label="sidebar navigation">
                 <div>
@@ -116,8 +116,8 @@
                         <button x-on:click="showSidebar = !showSidebar"
                                 class="flex text-on-surface mr-4"
                                 aria-label="Toggle sidebar">
-                            <i class="ri-side-bar-line text-xl hidden md:inline"></i>
-                            <i class="ri-menu-line text-xl md:hidden"></i>
+                            <i class="ri-side-bar-line text-xl hidden md:inline cursor-pointer"></i>
+                            <i class="ri-menu-line text-xl md:hidden cursor-pointer"></i>
                         </button>
                         <Typography variant="p" font="extralight" class="max-sm:hidden"> | </Typography>
                         <div id="breadcrumb" class="flex gap-1 items-center"></div>
@@ -165,7 +165,6 @@
     <div id="loadPanel"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.0.0/jspdf.umd.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/shepherd.js@8.3.1/dist/js/shepherd.min.js"></script>

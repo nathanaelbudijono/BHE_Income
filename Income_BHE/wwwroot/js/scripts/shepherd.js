@@ -80,7 +80,7 @@ const homeTour = (tour) => {
     });
 };
 
-const bankMutationOverViewTour = (tour) => {
+const noTour = (tour) => {
     tour.addStep({
         id: "overviewBankMutation",
         text: "There are currently no tutorial for this page.",
@@ -89,4 +89,189 @@ const bankMutationOverViewTour = (tour) => {
         ],
         modal: true,
     });
+};
+
+const bankMutationVirtualAccountTour = (tour) => {
+    tour.addStep({
+        id: "step1",
+        text: "This section provides a quick overview of this month Virtual Account mutation insights.",
+        attachTo: { element: "#va-insights" },
+        buttons: [
+            { text: "Close", action: tour.cancel, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+        modal: true,
+    });
+
+    tour.addStep({
+        id: "step2",
+        text: "Click this button to open a modal and upload a new Virtual Account mutation file.",
+        attachTo: { element: "#upload-va", on: "right" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+    tour.addStep({
+        id: "step3",
+        text: "Use this filter to view mutation files based on the selected mutation date range.",
+        attachTo: { element: "#vaDateRange", on: "left" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+
+
+    tour.addStep({
+        id: "step4",
+        text: "Here you'll find the list of mutation files you've uploaded. Click the options icon (three dots) to view more details.",
+        attachTo: { element: "#files-tab", on: "top" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+
+    tour.addStep({
+        id: "step5",
+        text: "This tab displays the list of transaction-level mutation records you've uploaded.",
+        attachTo: { element: "#mutation-tab", on: "top" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Done", action: tour.complete, classes: "success-btn" },
+        ],
+    });
+};
+
+const bankMutationBluTour = (tour) => {
+    tour.addStep({
+        id: "step1",
+        text: "This section provides a quick overview of this month Blu Autodebet mutation insights.",
+        attachTo: { element: "#blu-insights" },
+        buttons: [
+            { text: "Close", action: tour.cancel, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+        modal: true,
+    });
+
+    tour.addStep({
+        id: "step2",
+        text: "Click this button to open a modal and upload a new Blu Autodebet mutation file.",
+        attachTo: { element: "#upload-blu", on: "right" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+    tour.addStep({
+        id: "step3",
+        text: "Use this filter to view mutation files based on the selected entry date range.",
+        attachTo: { element: "#bluDateRange", on: "left" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+
+
+    tour.addStep({
+        id: "step4",
+        text: "Here you'll find the list of mutation files you've uploaded. Click the options icon (three dots) to view more details.",
+        attachTo: { element: "#blu-files-grid", on: "top" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+
+};
+
+const bankMutationOfflineTour = (tour) => {
+    tour.addStep({
+        id: "step1",
+        text: "This section provides a quick overview of this month Offline Autodebet mutation insights.",
+        attachTo: { element: "#offline-insights" },
+        buttons: [
+            { text: "Close", action: tour.cancel, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+        modal: true,
+    });
+
+    tour.addStep({
+        id: "step2",
+        text: "Click this button to open a modal and upload a new Offline Autodebet mutation file.",
+        attachTo: { element: "#upload-offline", on: "right" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+    tour.addStep({
+        id: "step3",
+        text: "Use this filter to view mutation files based on the selected entry date range.",
+        attachTo: { element: "#offlineDateRange", on: "left" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+
+
+    tour.addStep({
+        id: "step4",
+        text: "Here you'll find the list of mutation files you've uploaded. Click the options icon (three dots) to view more details.",
+        attachTo: { element: "#offline-files-grid", on: "top" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+
+};
+
+const bankMutationAtmTour = (tour) => {
+    tour.addStep({
+        id: "step1",
+        text: "This section provides a quick overview of this month Atm mutation insights.",
+        attachTo: { element: "#atm-insights" },
+        buttons: [
+            { text: "Close", action: tour.cancel, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+        modal: true,
+    });
+
+    tour.addStep({
+        id: "step2",
+        text: "Click this button to open a modal and upload a new Atm Autodebet mutation file.",
+        attachTo: { element: "#upload-atm", on: "right" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+    tour.addStep({
+        id: "step3",
+        text: "Use this filter to view mutation files based on the selected entry date range.",
+        attachTo: { element: "#atmDateRange", on: "left" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+
+
+    tour.addStep({
+        id: "step4",
+        text: "Here you'll find the list of mutation files you've uploaded. Click the options icon (three dots) to view more details.",
+        attachTo: { element: "#atm-files-grid", on: "top" },
+        buttons: [
+            { text: "Back", action: tour.back, classes: "neutral-btn" },
+            { text: "Next", action: tour.next, classes: "primary-btn" },
+        ],
+    });
+
 };

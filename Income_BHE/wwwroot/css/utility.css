@@ -12,7 +12,7 @@
     color: black !important;
     background-color: #ffffff !important;
     min-width: 80px;
-    font-size: 12px;
+    font-size: clamp(10px, 1.5vw, 12px);
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -38,7 +38,7 @@
     color: white !important;
     background-color: #0875e1 !important;
     min-width: 80px;
-    font-size: 12px;
+    font-size: clamp(10px, 1.5vw, 12px);
     border-radius: 60px;
     font-family: "Poppins", sans-serif;
     font-weight: 400;
@@ -65,7 +65,7 @@
     color: black !important;
     background-color: #fff !important;
     min-width: 80px;
-    font-size: 12px;
+    font-size: clamp(10px, 1.5vw, 12px);
     border-radius: 60px;
     font-family: "Poppins", sans-serif;
     font-weight: 400;
@@ -91,7 +91,7 @@
     color: white !important;
     background-color: #de2e21 !important;
     min-width: 80px;
-    font-size: 12px;
+    font-size: clamp(10px, 1.5vw, 12px);
     border-radius: 60px;
     font-family: "Poppins", sans-serif;
     font-weight: 400;
@@ -117,7 +117,7 @@
     color: white !important;
     background-color: #43c463 !important;
     min-width: 80px;
-    font-size: 12px;
+    font-size: clamp(10px, 1.5vw, 12px);
     border-radius: 60px;
     font-family: "Poppins", sans-serif;
     font-weight: 400;

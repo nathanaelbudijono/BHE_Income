@@ -39,3 +39,22 @@ const postFetcher = async (url, body) => {
         return errorFetchResponse;
     }
 };
+
+
+const postFormDataFetcher = async (url, formData) => {
+    try {
+        const stamp = "Bearer " + localStorage.getItem("stamp-token");
+        const res = await fetch(`${url}`, {
+            method: "POST",
+            headers: {
+                Authorization: stamp,
+            },
+            body: formData,
+        });
+
+        return await res.json();
+    } catch (err) {
+        console.error("Exception on postFormDataFetcher : ", err);
+        return errorFetchResponse;
+    }
+};
